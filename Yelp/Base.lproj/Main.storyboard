@@ -32,9 +32,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="104"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0Tp-wr-lt8">
-                                                    <rect key="frame" x="4" y="8" width="65" height="65"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="0Tp-wr-lt8">
+                                                    <rect key="frame" x="8" y="8" width="65" height="65"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="65" id="OIL-rz-vAQ"/>
+                                                        <constraint firstAttribute="width" constant="65" id="cCB-TQ-Wsn"/>
+                                                    </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ok8-Fp-dCo">
                                                     <rect key="frame" x="75" y="28" width="83" height="15"/>
@@ -83,11 +86,15 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="0Tp-wr-lt8" firstAttribute="leading" secondItem="Xi7-cX-ePL" secondAttribute="leading" constant="8" id="4Jt-dc-7yg"/>
+                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0Tp-wr-lt8" secondAttribute="bottom" constant="30" id="7nZ-Lj-mzO"/>
+                                                <constraint firstItem="0Tp-wr-lt8" firstAttribute="top" secondItem="Xi7-cX-ePL" secondAttribute="top" constant="8" id="Er2-zi-F5v"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="addressLabel" destination="im5-4k-jjp" id="k3A-v7-k00"/>
                                             <outlet property="categoriesLabel" destination="qeE-9b-l8G" id="11U-Na-PxX"/>
-                                            <outlet property="costLabel" destination="8g1-Pj-Kgv" id="kVB-Gj-JkS"/>
                                             <outlet property="distanceLabel" destination="ray-EF-ers" id="iUT-5V-JGF"/>
                                             <outlet property="nameLabel" destination="T2W-Fm-6zO" id="GiO-KP-jda"/>
                                             <outlet property="ratingImageView" destination="ok8-Fp-dCo" id="xz5-t3-BIX"/>

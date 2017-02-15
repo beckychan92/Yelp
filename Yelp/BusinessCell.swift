@@ -41,11 +41,14 @@ class BusinessCell: UITableViewCell {
         thumbImageView.layer.cornerRadius = 3
         thumbImageView.clipsToBounds = true
         
+        //sometimes out of sync
+        //need to sync up with size of label
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
         
     }
     
     //for rotation
+    //whenever you override, also want to make sure that you call the parent func
     override func layoutSubviews() {
         super.layoutSubviews()
         

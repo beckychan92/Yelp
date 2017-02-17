@@ -8,14 +8,17 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
+    //UISearchBarDelegate
     
     var businesses: [Business]!
+    var searchBar: UISearchBar!
     
     @IBOutlet weak var tableView: UITableView!
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         tableView.delegate = self
@@ -23,6 +26,19 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 120
 
+        //layout
+        if let navigationBar = navigationController?.navigationBar {
+            navigationBar.setBackgroundImage(UIImage(named: "layout3"), for: .default)
+            navigationBar.tintColor = UIColor(red: 1.0, green: 0.25, blue: 0.25, alpha: 0.8)
+        }
+        
+        
+        
+//        //Search bar
+//        searchBar = UISearchBar()
+//        searchBar.sizeToFit()
+//        navigationItem.titleView = searchBar
+        
         
         //Display a list of businesses 
         Business.searchWithTerm(term: "Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
@@ -49,7 +65,22 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
          }
          }
          */
+
+//     //search
+//        UIsearchDisplayController?.displaysSearchBarInNavigationBar = true
+//        searchController.searchBar.sizeToFit()
+//        navigationItem.titleView = searchController.searchBar
+//        searchController.hidesNavigationBarDuringPresentation = false
+//        
+//        
         
+        
+        
+        
+        
+        
+        
+
     }
     
     override func didReceiveMemoryWarning() {

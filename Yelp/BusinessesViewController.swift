@@ -8,23 +8,26 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate  {
-    //UISearchBarDelegate
+class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate  {
     
+    //UITableViewDataSource,
+
     var businesses: [Business]!
     var searchBar: UISearchBar!
+    var filterbusinesses: [Business]!
     
     @IBOutlet weak var tableView: UITableView!
-    
+
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = 120
+        self.tableView.delegate = self
+//        self.tableView.dataSource = self
+        self.tableView.rowHeight = UITableViewAutomaticDimension
+        self.tableView.estimatedRowHeight = 120
+
 
         //layout
         if let navigationBar = navigationController?.navigationBar {
@@ -32,12 +35,28 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             navigationBar.tintColor = UIColor(red: 1.0, green: 0.25, blue: 0.25, alpha: 0.8)
         }
         
+        func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            if self.filterbusinesses != nil {
+                return filterbusinesses!.count
+            } else {
+                return 0
+            }
+        }
         
         
-//        //Search bar
-//        searchBar = UISearchBar()
-//        searchBar.sizeToFit()
-//        navigationItem.titleView = searchBar
+        func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
+            
+            cell.business = businesses[indexPath.row]
+            
+            return cell
+        }
+        
+        
+        //Search bar
+        self.searchBar = UISearchBar()
+        self.searchBar.sizeToFit()
+        navigationItem.titleView = self.searchBar
         
         
         //Display a list of businesses 
@@ -71,19 +90,29 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 //        searchController.searchBar.sizeToFit()
 //        navigationItem.titleView = searchController.searchBar
 //        searchController.hidesNavigationBarDuringPresentation = false
+        
+        
+        
+        func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String){
+            self.filterbusinesses = searchText.isEmpty ? businesses : businesses?.filter({ (dataString:Business) -> Bool in
+            return dataString.name!.range(of: searchText, options: .caseInsensitive) != nil
+            })
+        }
+        
+        
+        
+        
+//        func searchBarTextDidEndEditing(_: <#T##searchBar: UISearchBar##UISearchBar#>){
 //        
+//        }
+//
+//        func searchBarCancelButtonClicked(<#T##searchBar: UISearchBar##UISearchBar#>){
 //        
-        
-        
-        
-        
-        
-        
+//        }
         
 
-    }
     
-    override func didReceiveMemoryWarning() {
+    func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -98,20 +127,6 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
      }
      */
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if businesses != nil {
-            return businesses!.count
-        } else {
-            return 0
-        }
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
-        
-        cell.business = businesses[indexPath.row]
-        
-        return cell
-    }
+
+}
 }

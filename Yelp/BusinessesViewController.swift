@@ -14,6 +14,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
     var businesses: [Business]!
     var searchBar: UISearchBar!
     var filterbusinesses: [Business]!
+    var refreshControl = UIRefreshControl()                         ///
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -21,12 +22,11 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 120
-        
         
         //layout for NavBar
         if let navigationBar = navigationController?.navigationBar {
@@ -39,6 +39,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
         self.searchBar = UISearchBar()
         self.searchBar.sizeToFit()
         navigationItem.titleView = self.searchBar
+        self.searchBar.showsCancelButton = true
         
         
         //Display a list of businesses
@@ -47,15 +48,19 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
             self.businesses = businesses
             self.filterbusinesses = businesses
             self.tableView.reloadData()
-            //            if let businesses = businesses {
-            //                for business in businesses {
-            //                    print(business.name!)
-            //                    print(business.address!)
-            //                }
-            //            }
-            
-        }
+            }
         )
+        if #available(iOS 10.0, *) {
+            tableView.refreshControl = self.refreshControl
+        } else {
+            // Fallback on earlier versions
+        }
+        self.refreshControl.addTarget(self, action: Selector("didRefreshList"), for: .valueChanged)
+    }
+    
+    func didRefreshList(){
+        self.refreshControl.endRefreshing()
+    
     }
     
     /* Example of Yelp search with more search options specified
@@ -85,11 +90,13 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
     }
     
     
+    //Search Bar
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         self.searchBar.showsCancelButton = true
         
     }
     
+    //Cancel Button when clicked
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
         searchBar.text = ""
@@ -98,10 +105,10 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
     
 
     
-        override func didReceiveMemoryWarning() {
-            super.didReceiveMemoryWarning()
-            // Dispose of any resources that can be recreated.
-        }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.filterbusinesses != nil {

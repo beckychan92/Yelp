@@ -50,6 +50,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
             self.tableView.reloadData()
             }
         )
+        
         if #available(iOS 10.0, *) {
             tableView.refreshControl = self.refreshControl
         } else {

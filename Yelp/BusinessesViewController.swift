@@ -81,24 +81,27 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
         self.filterbusinesses = searchText.isEmpty ? businesses : businesses?.filter({ (dataString:Business) -> Bool in
             return dataString.name!.range(of: searchText, options: .caseInsensitive) != nil
         })
+        tableView.reloadData()
     }
     
     
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        self.searchBar.showsCancelButton = true
+        
+    }
     
-    //        func searchBarTextDidEndEditing(_: <#T##searchBar: UISearchBar##UISearchBar#>){
-    //
-    //        }
-    //
-    //        func searchBarCancelButtonClicked(<#T##searchBar: UISearchBar##UISearchBar#>){
-    //
-    //        }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
     
+
     
-    
-    //    func didReceiveMemoryWarning() {
-    //        super.didReceiveMemoryWarning()
-    //        // Dispose of any resources that can be recreated.
-    //    }
+        override func didReceiveMemoryWarning() {
+            super.didReceiveMemoryWarning()
+            // Dispose of any resources that can be recreated.
+        }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.filterbusinesses != nil {

@@ -14,7 +14,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
     var businesses: [Business]!
     var searchBar: UISearchBar!
     var filterbusinesses: [Business]!
-    var refreshControl = UIRefreshControl()                         ///
+    var refreshControl = UIRefreshControl()
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -28,6 +28,15 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
         self.tableView.rowHeight = UITableViewAutomaticDimension
         self.tableView.estimatedRowHeight = 120
         
+        //Search bar
+        searchBar = UISearchBar()
+        searchBar.sizeToFit()
+        navigationItem.titleView = self.searchBar
+        searchBar.showsCancelButton = true
+        searchBar.delegate = self
+        
+
+        
         //layout for NavBar
         if let navigationBar = navigationController?.navigationBar {
             navigationBar.setBackgroundImage(UIImage(named: "layout3"), for: .default)
@@ -35,12 +44,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
         }
         
         
-        //Search bar
-        self.searchBar = UISearchBar()
-        self.searchBar.sizeToFit()
-        navigationItem.titleView = self.searchBar
-        self.searchBar.showsCancelButton = true
-        
+
         
         //Display a list of businesses
         Business.searchWithTerm(term: "Thai", completion: { (businesses: [Business]?, error: Error?) -> Void in
@@ -122,7 +126,7 @@ class BusinessesViewController: UIViewController, UITableViewDelegate, UISearchB
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "BusinessCell", for: indexPath) as! BusinessCell
         
-        cell.business = businesses[indexPath.row]
+        cell.business = self.filterbusinesses[indexPath.row]
         
         return cell
     }
